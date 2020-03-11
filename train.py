@@ -14,6 +14,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module='gym')
 import gym
 import numpy as np
 import yaml
+
 # Optional dependencies
 try:
     import pybullet_envs
@@ -29,6 +30,14 @@ try:
     from mpi4py import MPI
 except ImportError:
     mpi4py = None
+
+try:
+    import pybullet_robot_envs
+except ImportError:
+    pybullet_robot_envs = None
+import numpy as np
+import yaml
+from mpi4py import MPI
 
 from stable_baselines.common import set_global_seeds
 from stable_baselines.common.cmd_util import make_atari_env
@@ -186,7 +195,7 @@ if __name__ == '__main__':
     # Convert to python object if needed
     if 'policy_kwargs' in hyperparams.keys() and isinstance(hyperparams['policy_kwargs'], str):
         hyperparams['policy_kwargs'] = eval(hyperparams['policy_kwargs'])
-        
+
     # Delete keys so the dict can be pass to the model constructor
     if 'n_envs' in hyperparams.keys():
         del hyperparams['n_envs']

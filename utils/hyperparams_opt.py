@@ -454,6 +454,7 @@ def sample_her_params(trial):
 HYPERPARAMS_SAMPLER = {
     'ppo2': sample_ppo2_params,
     'sac': sample_sac_params,
+	'sac_residual': sample_sac_params,
     'a2c': sample_a2c_params,
     'trpo': sample_trpo_params,
     'ddpg': sample_ddpg_params,

@@ -21,6 +21,7 @@ from stable_baselines.deepq.policies import FeedForwardPolicy
 from stable_baselines.common.policies import FeedForwardPolicy as BasePolicy
 from stable_baselines.common.policies import register_policy
 from stable_baselines.sac.policies import FeedForwardPolicy as SACPolicy
+from robot_agents.stable_baselines_lib.sac.policy_residual import FeedForwardPolicy as SACPolicyResidual
 from stable_baselines.bench import Monitor
 from stable_baselines import logger
 from stable_baselines import PPO2, A2C, ACER, ACKTR, DQN, HER, SAC, TD3
@@ -29,6 +30,8 @@ if mpi4py is None:
     DDPG, TRPO = None, None
 else:
     from stable_baselines import DDPG, TRPO
+
+from robot_agents.stable_baselines_lib.sac.sac_residual import SAC_residual
 
 from stable_baselines.common.vec_env import DummyVecEnv, VecNormalize, \
     VecFrameStack, SubprocVecEnv
@@ -43,6 +46,7 @@ ALGOS = {
     'ddpg': DDPG,
     'her': HER,
     'sac': SAC,
+	'sac_residual': SAC_residual,
     'ppo2': PPO2,
     'trpo': TRPO,
     'td3': TD3
@@ -72,8 +76,14 @@ class CustomSACPolicy(SACPolicy):
                                               layers=[256, 256],
                                               feature_extraction="mlp")
 
+class CustomSACPolicyResidual(SACPolicyResidual):
+    def __init__(self, *args, **kwargs):
+        super(CustomSACPolicyResidual, self).__init__(*args, **kwargs,
+                                              feature_extraction="mlp")
+
 
 register_policy('CustomSACPolicy', CustomSACPolicy)
+register_policy('CustomSACPolicyResidual', CustomSACPolicyResidual)
 register_policy('CustomDQNPolicy', CustomDQNPolicy)
 register_policy('CustomMlpPolicy', CustomMlpPolicy)
 

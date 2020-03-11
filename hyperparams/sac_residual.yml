@@ -1,0 +1,10 @@
+iCubReachResidual-v0:
+  n_timesteps: !!float 50000
+  policy: 'CustomSACPolicyResidual'
+  learning_rate: lin_3e-4
+  buffer_size: 100000
+  batch_size: 256
+  ent_coef: 0.1
+  train_freq: 10
+  gradient_steps: 1
+  learning_starts: 1000
